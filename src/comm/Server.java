@@ -59,6 +59,13 @@ public class Server extends Thread{
 						String ip = listener.ip();
 						bwriter.write(ip+"\n");
 						bwriter.flush();
+					}else if(msg.contains("RTT")) {
+						
+					}else if(msg.contains("Speed")) {
+						
+					}else {
+						bwriter.write("La palabra: "+msg+" no existe."+"Error en la etapa 8 OSI :)"+"\n");
+						bwriter.flush();
 					}
 				
 				server.close();
