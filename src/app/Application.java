@@ -1,9 +1,16 @@
 package app;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.List;
 
 import comm.Server;
 
@@ -29,6 +36,65 @@ private Server connection;
 			String fecha = c.getTime().toString();
 			return fecha;
 	}
+	
+	@Override
+	public ArrayList<String> interfaces() {
+		int counter = 0;
+    	String macSeparator = "";
+    	ArrayList<String> mostrar = new ArrayList<>();
+
+    	
+		try {
+			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+			
+			while(interfaces.hasMoreElements()) {
+				NetworkInterface netN = interfaces.nextElement();
+				
+				if(netN.isUp()) {
+					
+					
+					//System.out.println(netN.getName());
+					mostrar.add(netN.getName());
+					
+					if(netN.getHardwareAddress() != null) {
+						//System.out.println(netN.getHardwareAddress());
+						String mac = new BigInteger(1,netN.getHardwareAddress()).toString(16);
+						
+						for (int i = 0; i < mac.length(); i++){
+						    char letra = mac.charAt(i);
+						    
+						    macSeparator += letra;
+						    
+						    counter++;
+						    
+						    if(counter == 2 && i != 9) {
+						    	//Tratamiento del caracter
+						    	
+						    	macSeparator += ":"; 
+						    	counter = 0;
+						    }
+						    
+						}
+					  //  System.out.println("<<<"+macSeparator);
+						mostrar.add(macSeparator);
+
+					}
+					
+				}
+				
+				
+				
+			}
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+
+		
+		}
+
+    	
+		
+		return mostrar;
+	}
 
 	@Override
 	public String ip() {
@@ -43,4 +109,6 @@ private Server connection;
 		
 		return msg;
 	}
+
+	
 }

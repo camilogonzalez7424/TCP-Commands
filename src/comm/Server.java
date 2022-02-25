@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Server extends Thread{
@@ -51,7 +52,9 @@ public class Server extends Thread{
 						bwriter.write(fecha+"\n");
 						bwriter.flush();
 					}else if(msg.contains("interfaces")) {
-					
+						ArrayList<String> interfaces = listener.interfaces();
+						bwriter.write(interfaces+"\n");
+						bwriter.flush();
 					}else if(msg.contains("remoteIpconfig")){
 						String ip = listener.ip();
 						bwriter.write(ip+"\n");
@@ -72,6 +75,7 @@ public class Server extends Thread{
 	
 	public interface OnMessageListener{
 		public String time();
+		public ArrayList<String> interfaces();
 		public String ip();
 	}
 }
