@@ -60,15 +60,24 @@ public class Server extends Thread{
 						bwriter.write(ip+"\n");
 						bwriter.flush();
 					}else if(msg.contains("RTT")) {
-						
+						//LEE EL MENSAJE
+						String msg1 = breader.readLine();
+
+						bwriter.write(msg1+"\n");
+						bwriter.flush();
+						//REENVIA
 					}else if(msg.contains("Speed")) {
-						
+						String msg1 = breader.readLine();
+
+						bwriter.write(msg1+"\n");
+						bwriter.flush();
 					}else {
 						bwriter.write("La palabra: "+msg+" no existe."+"Error en la etapa 8 OSI :)"+"\n");
 						bwriter.flush();
 					}
 				
 				server.close();
+				System.out.println("Cliente Y Servidor Desconectados");
 			}
 			
 		}catch(IOException ex) {
